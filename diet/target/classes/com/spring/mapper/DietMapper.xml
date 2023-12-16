@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.DietMapper">
+	
+	<select id="getUserCode" resultType="int">
+    	SELECT usercode_seq.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="insertUser">
+		INSERT INTO dietuser(username,usercode,height,weight,gender)
+		VALUES(#{username}, #{userCode} , #{height} , #{weight} , #{gender})
+	</insert>
+	
+	<select id="checkUser" resultType="int">
+    	select count(*) from dietuser where username=#{username} and userCode=#{userCode}
+	</select>
+	
+	<select id="getUser">
+    	select * from dietuser where userCode=#{userCode}
+	</select>
+	
+	<select id="getFood">
+    	select * from food
+	</select>
+	
+	<insert id="insertUserEat">
+		INSERT INTO userfood(usercode,eattype,foodName,kcal,eatdate)
+		VALUES(#{userCode}, #{eatType} , #{foodName} , #{kcal} , TO_DATE(#{eatDate}, 'YYYYMMDD'))
+	</insert>
+	
+	<select id="readEatDate">
+    	SELECT * FROM userfood 
+    	where eatDate BETWEEN TO_DATE(#{sdfDate00}, 'YYYYMMDD-HH24') AND TO_DATE(#{sdfDate24}, 'YYYYMMDD-HH24') AND usercode=#{userCode}
+	</select>
+	
+	<insert id="addActivity">
+		INSERT INTO useractive(usercode,type,slope,speed,time,activedate)
+		VALUES(#{userCode}, #{type} , #{slope} , #{speed} , #{time},#{activeDate})
+	</insert>
+	
+	<select id="readActiveDate">
+    	SELECT * FROM useractive 
+    	where activeDate BETWEEN TO_DATE(#{sdfDate00}, 'YYYYMMDD-HH24') AND TO_DATE(#{sdfDate24}, 'YYYYMMDD-HH24') AND usercode=#{userCode}
+	</select>
+</mapper> 
