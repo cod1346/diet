@@ -40,7 +40,7 @@ public class HomeController {
 			UserDTO dto1 = service.getUser(dto.getUserCode());
 			model.addAttribute("dto",dto1);
 			model.addAttribute("list",list);
-			return "test";
+			return "diet";
 		}
 		@GetMapping("/register")
 		public String register() {
